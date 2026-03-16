@@ -10,7 +10,8 @@ declare(strict_types=1);
 
 // Default cache duration: 24 hours (in seconds)
 define("CACHE_DURATION", 24 * 60 * 60);
-define("CACHE_DIR", __DIR__ . "/../cache");
+// Use /tmp on Vercel (read-only filesystem) - /tmp is the only writable dir in serverless
+define("CACHE_DIR", getenv("VERCEL") ? sys_get_temp_dir() . "/streak-stats-cache" : __DIR__ . "/../cache");
 
 /**
  * Generate a cache key for a user's request
